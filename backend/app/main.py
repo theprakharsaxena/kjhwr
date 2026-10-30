@@ -18,19 +18,23 @@ logging.basicConfig(
 )
 logger = logging.getLogger("windscope.main")
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Preload and cache January 2026 data on startup asynchronously
+import asyncio
+
+async def _prewarm_cache():
     logger.info("Initializing WindScope backend and pre-warming cache...")
     try:
-        # Trigger background data loading
         logger.info("Fetching actuals (FUELHH)...")
         await actuals_service.get_actuals_df()
         logger.info("Fetching forecasts (WINDFOR)...")
         await forecasts_service.get_raw_forecasts_df()
         logger.info("WindScope cache initialized successfully.")
     except Exception as e:
-        logger.warning(f"Background pre-warm encountered notice (data will be loaded on demand): {e}")
+        logger.warning(f"Background pre-warm notice (data will be loaded on demand): {e}")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Trigger background cache pre-warm without blocking port binding
+    asyncio.create_task(_prewarm_cache())
     yield
     logger.info("WindScope shutting down.")
 
