@@ -10,7 +10,15 @@ It reconstructs the exact national wind generation forecasts available at key da
 
 ---
 
-### 2. Project Directory & Local Locations
+### 2. Live Deployed Application URLs
+- **Live Frontend (Vercel):** [https://frontend-ashy-eta-56.vercel.app](https://frontend-ashy-eta-56.vercel.app/)
+- **Live Backend API (Render):** [https://kjhwr-5lq1.onrender.com](https://kjhwr-5lq1.onrender.com)
+- **Live Healthcheck Endpoint:** [https://kjhwr-5lq1.onrender.com/health](https://kjhwr-5lq1.onrender.com/health)
+- **Interactive Swagger Documentation:** [https://kjhwr-5lq1.onrender.com/docs](https://kjhwr-5lq1.onrender.com/docs)
+
+---
+
+### 3. Project Directory & Local Locations
 - **Project Root:** `/Users/prakharsaxena/Downloads/untitled folder 26`
 - **Backend Directory:** `/Users/prakharsaxena/Downloads/untitled folder 26/backend`
 - **Frontend Directory:** `/Users/prakharsaxena/Downloads/untitled folder 26/frontend`
@@ -19,7 +27,7 @@ It reconstructs the exact national wind generation forecasts available at key da
 
 ---
 
-### 3. Exact Commands to Run Locally
+### 4. Exact Commands to Run Locally
 
 #### Option A: Docker Compose (Single Command)
 ```bash
@@ -45,7 +53,7 @@ docker compose up --build
 
 ---
 
-### 4. Automated Test & Build Results
+### 5. Automated Test & Build Results
 
 #### Backend Test Suite (Pytest)
 ```bash
@@ -69,7 +77,7 @@ npm run build
 
 ---
 
-### 5. Verified Data Integrity on January 2026 Real Market Data
+### 6. Verified Data Integrity on January 2026 Real Market Data
 
 | Parameter | Official Elexon BMRS Ground Truth | WindScope Computed Metric | Status |
 |---|---|---|---|
@@ -84,7 +92,7 @@ npm run build
 
 ---
 
-### 6. Public GitHub Repository Instructions
+### 7. Public GitHub Repository Instructions
 
 The local Git repository is initialized on branch `main` with a clean, anonymous commit (`06bfd19`).
 
@@ -103,30 +111,35 @@ git push -u origin main
 
 ---
 
-### 7. Deployment Instructions (Vercel & Railway/Render/Heroku)
+### 8. Live Production Deployment Setup & Instructions
 
-1. **Deploy Backend (Railway / Render / Heroku):**
-   - Connect the repository and select root directory `/backend`.
-   - Start command:
+1. **Frontend (Vercel):**
+   - **Live Production URL:** [https://frontend-ashy-eta-56.vercel.app](https://frontend-ashy-eta-56.vercel.app/)
+   - Root Directory: `frontend`
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+   - Configured Environment Variable:
      ```bash
-     uvicorn app.main:app --host 0.0.0.0 --port $PORT
+     VITE_API_BASE_URL=https://kjhwr-5lq1.onrender.com
      ```
-   - Environment variables:
-     - `PORT=8000`
-     - `ELEXON_API_BASE_URL=https://data.elexon.co.uk/bmrs/api/v1`
-     - `CORS_ORIGINS=["*"]`
-   - Test health endpoint: `https://<BACKEND_HOST>/health`
+   - SPA routing verified via [`frontend/vercel.json`](file:///Users/prakharsaxena/Downloads/untitled%20folder%2026/frontend/vercel.json).
 
-2. **Deploy Frontend (Vercel / Netlify):**
-   - Connect the repository and select root directory `/frontend`.
-   - Build command: `npm run build`
-   - Output directory: `dist`
-   - Environment variable:
-     - `VITE_API_BASE_URL=https://<BACKEND_HOST>`
+2. **Backend (Render):**
+   - **Live API Base URL:** [https://kjhwr-5lq1.onrender.com](https://kjhwr-5lq1.onrender.com)
+   - **Live Healthcheck:** [https://kjhwr-5lq1.onrender.com/health](https://kjhwr-5lq1.onrender.com/health) (Status: `ok`, 100% January 2026 Elexon data cached)
+   - **Interactive OpenAPI/Swagger Docs:** [https://kjhwr-5lq1.onrender.com/docs](https://kjhwr-5lq1.onrender.com/docs)
+   - Root Directory: `backend`
+   - Python Version: `3.11.10` (enforced via `.python-version` and `backend/runtime.txt`)
+   - Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT --loop asyncio`
+   - Environment Variables:
+     - `PORT=8000`
+     - `PYTHON_VERSION=3.11.10`
+     - `ELEXON_API_BASE_URL=https://data.elexon.co.uk/bmrs/api/v1`
+     - `CORS_ORIGINS=["https://frontend-ashy-eta-56.vercel.app","http://localhost:5173","*"]`
 
 ---
 
-### 8. Acceptance Checklist
+### 9. Acceptance Checklist
 
 - [x] React frontend with TypeScript, Vite, Tailwind CSS, Recharts, and Lucide icons.
 - [x] Python FastAPI backend with Pydantic v2 schemas and async HTTPX client.

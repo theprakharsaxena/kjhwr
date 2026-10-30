@@ -12,8 +12,13 @@ This document contains the complete, ready-to-record demonstration script for **
 - **Total Target Duration:** 9 minutes (well within the 10-minute maximum limit).
 - **Resolution:** 1080p (1920×1080) or 4K, 60fps.
 - **Audio:** Clear directional microphone, noise suppression active.
+- **Live Deployment URLs:**
+  - **Live Web Application:** [https://frontend-ashy-eta-56.vercel.app](https://frontend-ashy-eta-56.vercel.app/)
+  - **Live Backend API:** [https://kjhwr-5lq1.onrender.com](https://kjhwr-5lq1.onrender.com)
+  - **Live Healthcheck Endpoint:** [https://kjhwr-5lq1.onrender.com/health](https://kjhwr-5lq1.onrender.com/health)
+  - **Live Swagger Documentation:** [https://kjhwr-5lq1.onrender.com/docs](https://kjhwr-5lq1.onrender.com/docs)
 - **Screen Layout:**
-  - Browser window set to 100% zoom on `http://localhost:5173`.
+  - Browser window set to 100% zoom on `https://frontend-ashy-eta-56.vercel.app` (or local `http://localhost:5173`).
   - Terminal window split with FastAPI backend logs, Pytest execution, and Docker commands.
 - **Evaluator Focus:** Verifying that data values are computed dynamically from genuine January 2026 Elexon records (`FUELHH` and `WINDFOR`), that no future data leaks into the decision-time views, and that error formulas adhere strictly to industry standards.
 
@@ -24,13 +29,13 @@ This document contains the complete, ready-to-record demonstration script for **
 **Persona:** Senior Energy Market Analyst & Lead Solution Architect presenting to the Head of Wholesale Power Procurement.
 
 ### Screen Checklist for Part 1:
-- [ ] Browser at `http://localhost:5173/overview`
+- [ ] Browser at `https://frontend-ashy-eta-56.vercel.app/overview` (or `http://localhost:5173/overview`)
 - [ ] Delivery Day navigation (Jan 1, 2026, toggling to Jan 2 and Jan 5)
 - [ ] Cutoff Policy selector dropdown (`d0_0000`, `d1_1100`)
 - [ ] Dynamic Insight Panel showing computed volume imbalance
-- [ ] `http://localhost:5173/timeline` (Full Month & Week 1 zoom, resolution toggle)
-- [ ] `http://localhost:5173/accuracy` (KPI cards, Error Distribution, Daily Bias chart, Outlier table)
-- [ ] `http://localhost:5173/history` (Vintage evolution curve with decision cutoff marker)
+- [ ] `https://frontend-ashy-eta-56.vercel.app/timeline` (Full Month & Week 1 zoom, resolution toggle)
+- [ ] `https://frontend-ashy-eta-56.vercel.app/accuracy` (KPI cards, Error Distribution, Daily Bias chart, Outlier table)
+- [ ] `https://frontend-ashy-eta-56.vercel.app/history` (Vintage evolution curve with decision cutoff marker)
 
 ---
 
@@ -147,13 +152,15 @@ This document contains the complete, ready-to-record demonstration script for **
 >
 > *Every unit test uses small, explicitly labeled synthetic fixtures, never masquerading mock data as actual observations."*
 
-#### 8:40 – 9:00 | Docker Infrastructure & Deployment
-**[Visual: Open `docker-compose.yml`, inspect backend health in terminal]**
-> *"For deployment, we provide a multi-stage `Dockerfile` for the FastAPI backend, a multi-stage Nginx container for the React frontend, and a root `docker-compose.yml`. A single command—`docker compose up --build`—spins up both services with internal networking, volume caching, and container health checks.*
+#### 8:40 – 9:00 | Cloud Deployment, Docker & Production Verification
+**[Visual: Show live Vercel web app `https://frontend-ashy-eta-56.vercel.app`, Render `/health`, and `docker-compose.yml`]**
+> *"For deployment, WindScope is live in production:
+> - The React/TypeScript frontend is deployed on Vercel at `https://frontend-ashy-eta-56.vercel.app`.
+> - The FastAPI backend runs on Render at `https://kjhwr-5lq1.onrender.com` with automated Elexon dataset pre-warming on boot and interactive Swagger documentation at `/docs`.
 >
-> *The frontend API URL is completely configurable via `VITE_API_BASE_URL` for production platforms such as Vercel and Heroku/Render.*
+> In addition to cloud deployment, we provide a multi-stage `Dockerfile` for backend and frontend, and a root `docker-compose.yml`. A single command—`docker compose up --build`—spins up both services locally with internal networking and container health checks.
 >
-> *Thank you for your time. WindScope is fully production-ready, thoroughly verified, and ready for review."*
+> Thank you for your time. WindScope is fully production-ready, mathematically verified on real January 2026 British market data, and ready for review."*
 
 ---
 

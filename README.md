@@ -8,6 +8,14 @@
 [![Vite](https://img.shields.io/badge/Vite-5.4+-646cff.svg?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4+-38bdf8.svg?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Pytest](https://img.shields.io/badge/Tests-19%20Passed-10b981.svg)](https://docs.pytest.org/)
+[![Live App](https://img.shields.io/badge/Live%20App-Vercel-black.svg?logo=vercel)](https://frontend-ashy-eta-56.vercel.app/)
+[![API Backend](https://img.shields.io/badge/API%20Backend-Render-46E3B7.svg?logo=render)](https://kjhwr-5lq1.onrender.com)
+
+> **Live Production Deployment**
+> - **Web Application (Vercel):** [https://frontend-ashy-eta-56.vercel.app](https://frontend-ashy-eta-56.vercel.app/)
+> - **FastAPI Backend (Render):** [https://kjhwr-5lq1.onrender.com](https://kjhwr-5lq1.onrender.com)
+> - **Interactive Swagger Docs:** [https://kjhwr-5lq1.onrender.com/docs](https://kjhwr-5lq1.onrender.com/docs)
+> - **Healthcheck Endpoint:** [https://kjhwr-5lq1.onrender.com/health](https://kjhwr-5lq1.onrender.com/health)
 
 ---
 
@@ -390,22 +398,39 @@ vite v5.4.21 building for production...
 
 ## 12. Deployment Architecture & Production Setup
 
+### Live Production Instances:
+- **Frontend URL:** [https://frontend-ashy-eta-56.vercel.app](https://frontend-ashy-eta-56.vercel.app/)
+- **Backend API URL:** [https://kjhwr-5lq1.onrender.com](https://kjhwr-5lq1.onrender.com)
+- **Interactive Swagger Documentation:** [https://kjhwr-5lq1.onrender.com/docs](https://kjhwr-5lq1.onrender.com/docs)
+- **Live Healthcheck Endpoint:** [https://kjhwr-5lq1.onrender.com/health](https://kjhwr-5lq1.onrender.com/health)
+
 ### Deployment Blueprint:
-1. **Frontend:** Deployed to **Vercel** or **Netlify**. Set the build command to `npm run build`, output directory to `dist`, and configure the environment variable:
-   ```bash
-   VITE_API_BASE_URL=https://your-backend-service.up.railway.app
-   ```
-2. **Backend:** Deployed to **Railway**, **Render**, or **Heroku**.
-   - Start command:
+1. **Frontend (Vercel):**
+   - Repository Root: `frontend`
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+   - Configured Environment Variable:
      ```bash
-     uvicorn app.main:app --host 0.0.0.0 --port $PORT
+     VITE_API_BASE_URL=https://kjhwr-5lq1.onrender.com
      ```
-   - Set environment variables:
+   - Single-Page Application (SPA) routing managed via [`frontend/vercel.json`](file:///Users/prakharsaxena/Downloads/untitled%20folder%2026/frontend/vercel.json) rewrites.
+
+2. **Backend (Render):**
+   - Root Directory: `backend`
+   - Runtime: Python 3.11.10 (pinned via `.python-version` and `backend/runtime.txt`)
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command:
+     ```bash
+     uvicorn app.main:app --host 0.0.0.0 --port $PORT --loop asyncio
+     ```
+   - Configured Environment Variables:
      ```bash
      PORT=8000
+     PYTHON_VERSION=3.11.10
      ELEXON_API_BASE_URL=https://data.elexon.co.uk/bmrs/api/v1
-     CORS_ORIGINS=["https://your-frontend.vercel.app"]
+     CORS_ORIGINS=["https://frontend-ashy-eta-56.vercel.app","http://localhost:5173","*"]
      ```
+   - Cache Pre-Warming: Automatically warms January 2026 Elexon records asynchronously on startup without blocking Uvicorn port binding.
 
 ---
 
