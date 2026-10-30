@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-800 font-sans antialiased;
+  }
+}
+
+/* Clean standard card */
+.panel-card {
+  @apply bg-white border border-slate-200 rounded-lg shadow-sm;
+}
+
+/* Table styles */
+.data-table {
+  @apply w-full text-left text-sm border-collapse;
+}
+
+.data-table th {
+  @apply bg-slate-50 text-slate-600 font-semibold px-4 py-2.5 text-xs uppercase tracking-wider border-b border-slate-200;
+}
+
+.data-table td {
+  @apply px-4 py-2.5 text-slate-700 border-b border-slate-100 text-sm;
+}
+
+.data-table tr:hover td {
+  @apply bg-slate-50/80;
+}
