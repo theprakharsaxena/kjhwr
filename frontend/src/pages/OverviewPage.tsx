@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Zap, 
-  Wind, 
+  Fan, 
   TrendingUp, 
   TrendingDown, 
   Calendar, 
@@ -148,7 +148,7 @@ export const OverviewPage: React.FC = () => {
               value={data.avg_forecast_mw}
               unit="MW"
               subtitle={`Total Energy: ${data.total_forecast_mwh.toLocaleString()} MWh`}
-              icon={Wind}
+              icon={Fan}
               badge={{
                 text: 'Day-Ahead',
                 variant: 'info'
